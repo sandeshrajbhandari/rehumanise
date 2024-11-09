@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -22,14 +23,14 @@ const Navbar = () => {
     { title: "Products", href: "/products" },
     { title: "Contact", href: "/contact" },
   ];
-
+  let pathname = usePathname();
   return (
     <header className="border-b bg-white">
       <div className="flex items-center justify-between h-16 px-4 max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2">
           <span className="text-xl font-bold">reHumanise Pro</span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex">
@@ -43,7 +44,7 @@ const Navbar = () => {
                       "px-4 py-2 hover:text-primary ",
                       navigationMenuTriggerStyle()
                     )}
-                    active={usePathname() === item.href}
+                    active={pathname === item.href}
                   >
                     {item.title}
                   </NavigationMenuLink>
@@ -65,13 +66,13 @@ const Navbar = () => {
             <SheetContent side="right">
               <nav className="flex flex-col space-y-4 mt-4">
                 {navigationItems.map((item) => (
-                  <a
+                  <Link
                     key={item.title}
                     href={item.href}
                     className="text-lg hover:text-primary"
                   >
                     {item.title}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </SheetContent>
