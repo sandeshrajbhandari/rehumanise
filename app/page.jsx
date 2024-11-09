@@ -6,7 +6,14 @@ import { Hero } from "@/components/Hero";
 import { Robot3D } from "@/components/Robot3D";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Sparkles, FileText, Brain, Zap } from "lucide-react";
+import {
+  Check,
+  Sparkles,
+  FileText,
+  Brain,
+  Zap,
+  MoreHorizontal,
+} from "lucide-react";
 
 export default function Home() {
   return (
@@ -56,7 +63,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="container mx-auto px-4 py-16 bg-white">
+      <section className="container mx-auto px-4 py-16 bg-white border-r-4">
         <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="flex items-start gap-4">
@@ -93,6 +100,82 @@ export default function Home() {
                 Receive your naturally-written content instantly.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Events Grid Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-12 gap-6">
+            {/* Left Column - Two Small Boxes */}
+            <div className="flex flex-col justify-center col-span-4 space-y-6">
+              {/* Top Small Box */}
+              <div className="bg-slate-900 rounded-3xl p-6 text-white">
+                <div className="text-sm opacity-80 mb-1">April</div>
+                <h3 className="text-lg font-medium mb-4">
+                  AI Writing Sprint: 24-Hour Challenge
+                </h3>
+                <button className="text-sm opacity-80 hover:opacity-100">
+                  Learn more
+                </button>
+              </div>
+
+              {/* Bottom Small Box */}
+              <div className="bg-white rounded-3xl p-6 text-slate-900">
+                <div className="text-sm opacity-80 mb-1">November</div>
+                <h3 className="text-lg font-medium mb-4">
+                  Writing Style Conference 2024
+                </h3>
+                <button className="text-sm opacity-80 hover:opacity-100">
+                  Learn more
+                </button>
+              </div>
+            </div>
+
+            {/* Center - Large Blue Box */}
+            <div className="col-span-4">
+              <div className="bg-blue-600 rounded-3xl p-8 text-white h-full">
+                <div className="text-sm opacity-80 mb-1">August</div>
+                <h3 className="text-6xl font-medium mb-4">
+                  AI Content Creator Summit & Meetup 2024
+                </h3>
+                <button className="text-sm opacity-80 hover:opacity-100">
+                  Learn more
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column - Two Boxes */}
+            <div className="col-span-4 space-y-6">
+              {/* Top Small Box */}
+              <div className="bg-slate-900 rounded-3xl p-6 text-white">
+                <div className="text-sm opacity-80 mb-1">March</div>
+                <h3 className="text-lg font-medium mb-4">
+                  Natural Language Processing Workshop
+                </h3>
+                <button className="text-sm opacity-80 hover:opacity-100">
+                  Learn more
+                </button>
+              </div>
+
+              {/* Bottom Small Box */}
+              <div className="bg-green-400 rounded-3xl p-6 h-96 text-slate-900">
+                <div className="text-sm opacity-80 mb-1">December</div>
+                <h3 className="text-6xl font-medium mb-4">
+                  Content Innovation Festival
+                </h3>
+                <button className="text-sm opacity-80 hover:opacity-100">
+                  Learn more
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* More Events Link */}
+          <div className="mt-6 text-slate-600 flex items-center gap-2 justify-end">
+            <span>More events</span>
+            <MoreHorizontal className="w-4 h-4" />
           </div>
         </div>
       </section>
