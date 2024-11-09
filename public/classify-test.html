@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classification Test</title>
+  </head>
+  <body>
+    <h1>Text Classification Test</h1>
+
+    <label for="inputText">Enter text:</label>
+    <input type="text" id="inputText" placeholder="Type something..." />
+    <button id="fetchBtn">Classify</button>
+
+    <h3>Response:</h3>
+    <pre id="responseText"></pre>
+
+    <script>
+      document
+        .getElementById("fetchBtn")
+        .addEventListener("click", async () => {
+          const text = document.getElementById("inputText").value;
+          if (!text) {
+            document.getElementById("responseText").innerText =
+              "Please enter some text.";
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `/.netlify/functions/classify?text=${encodeURIComponent(text)}`
+            );
+            const result = await response.json();
+
+            document.getElementById("responseText").innerText = JSON.stringify(
+              result,
+              null,
+              2
+            );
+          } catch (error) {
+            document.getElementById("responseText").innerText =
+              "Error: " + error.message;
+          }
+        });
+    </script>
+  </body>
+</html>

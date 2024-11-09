@@ -10,6 +10,14 @@
 - npx shadcn@latest add select - for select
 - npx shadcn@latest add textarea - for textarea -->
 
+## netlify functions setup
+
+_failed as transformers.js couldn't download models to local serverless instance_
+`npm install netlify-cli -g`
+for testing locally.
+
+- https://stackoverflow.com/questions/69351433/i-am-trying-to-host-my-react-website-on-netlify-but-there-is-a-npm-install-error
+
 ## progress logs
 
 ### 2024-11-09
