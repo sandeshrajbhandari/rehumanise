@@ -1,32 +1,34 @@
-import React from 'react';
-import { Menu } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+"use client";
+
+import React from "react";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuLink,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const navigationItems = [
-    { title: 'Home', href: '/' },
-    { title: 'About', href: '/about' },
-    { title: 'Products', href: '/products' },
-    { title: 'Contact', href: '/contact' },
+    { title: "Home", href: "/" },
+    { title: "About", href: "/about" },
+    { title: "Products", href: "/products" },
+    { title: "Contact", href: "/contact" },
   ];
 
   return (
-    <header className="border-b">
+    <header className="border-b bg-white">
       <div className="flex items-center justify-between h-16 px-4 max-w-7xl mx-auto">
         {/* Logo */}
         <a href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold">Logo</span>
+          <span className="text-xl font-bold">reHumanise Pro</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -37,7 +39,11 @@ const Navbar = () => {
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
                     href={item.href}
-                    className="px-4 py-2 hover:text-primary"
+                    className={cn(
+                      "px-4 py-2 hover:text-primary ",
+                      navigationMenuTriggerStyle()
+                    )}
+                    active={usePathname() === item.href}
                   >
                     {item.title}
                   </NavigationMenuLink>
