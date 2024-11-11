@@ -1,4 +1,6 @@
-
+[build.environment]
+  GOOGLE_APPLICATION_CREDENTIALS = "./netlify/functions/rewrite/test-api-sandesh-dc92d7df74fc.json"
+  TEST_KEY = "testFromTOML"
 [environment]
   NETLIFY_API_KEY = "your-api-key"
   NETLIFY_SITE_ID = "your-site-id"
