@@ -1,6 +1,7 @@
 [build]
-	functions = "netlify/functions"
 	publish = "public"
-
+[environment]
+  NETLIFY_API_KEY = "your-api-key"
+  NETLIFY_SITE_ID = "your-site-id"
 [functions]
         node_bundler = "esbuild"
