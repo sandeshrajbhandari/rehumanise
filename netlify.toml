@@ -5,3 +5,4 @@
   NETLIFY_SITE_ID = "your-site-id"
 [functions]
         node_bundler = "esbuild"
+		environment = { TEST_ENV = "your_local_api_key" } # add your key here
