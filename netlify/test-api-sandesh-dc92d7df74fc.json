@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "test-api-sandesh",
+  "private_key_id": "dc92d7df74fcf1e7254fa5d78495cc02fbf838ca",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaZNRjOXKn4oiA\nBpw3QqSBSYWVYv1aBQzBcLVlaBgPl7DZZDw+wmK3TbCWLKPkgqdWhrV346PeLowy\nMxYQQ/cvkcVzYb9kbTmN30Ur5i5boUGFeGU1Ucgo4XvE2H/08+QF5vOySqQGMx5a\n4UYgx5lYqHCCaEALKQ3eY97Ll32gE3cUFw0FTdAfvJnyraEBmb0rbOLmLRjOcRYU\nuEbcJRaMRa6MN0IWfWd0CN94zMQP03gAQtF7ZG0U1mNxAauQfMrJRAm8AEnpWwFt\nHttaqAMVnbwCQMi9U8LbXYje9kbTRnWSwBXSJnKw++2OB1tMAdI/7yG4gg34xPVC\nR7mp3qKNAgMBAAECggEABWi0O/A7JJOp7CXTGP6dDW4GkXXIruyWGB+/AQ/MHMLA\niLnV+3tGr6Hhyu5jHBtCTWnRCnLzEY3XP2e1ga9KlX0yRefOB4zkUoe3nQflQ7QM\nPTkx+dlDMFlZU+hFebR6rsy9YhU9gmvMsiqHLp5S8CJdMFWoVGkZZKsrjvZQZbZZ\n/RyWT0RVdVXFJdXaoT+p7WpUwg89QPe/xeQEXcRHk8fPQ6v5uI0IDT/L0KRltTmf\nS3HNqciz6I4a0yblfa6bY+ctjBa44xKmBu52wCM6ygqCHQZZT7sKIy6DodwEc9UJ\nlXNQTLQqYotT1hYb3/J4vd16JDxDPqmte4yYb+PSbwKBgQDzf+JrG8fqVubLmKLp\nTx95ZmJrEHVTQe/a+MeZeRDtTGYPuzQ265nxc2mu6HhljvnfqJS3GbsvEpX0IFm6\nOaAl7Rdmdr9KmYHrl2KcI2ZVKKR9zTj46ytL3mA+xQ9ThNg/KgzRTz3n7ZlhxEFq\n5RGD54yjJBLa5FgdPiRf64/1qwKBgQDlmwBw1TUjNvbMO3HRJvUZGEz4hbrS8siP\nQUyqDneZggA1QSm6M8k2FUEMln/lb8pzgVP6OEgcdBF7BkICVYF/sKJGmKtu9HIb\nZRnZZNb4MZX9Hh1x3KtxWrpXhunEMv1NBFR3h6U1nag/zwn/9GHHjL0FycHzgWtg\nCXz2QMAgpwKBgCshA6GlEgvXyJlXN8PLV+/Qyq3cBGvyyeEnH3N3lh/x4EH5Do6L\nvICfyKBKXMjgQjHzUiP8UsNLr3PGJx5tBoixLevgLJGyDukDr1uoiX+b60a9CtJM\nFScjBDkZ/lT0uri1Yf/Q4U4rL3e5ozyjxi5u3OIoiY5r04+aaibzOlRxAoGBAKi4\nE8TWBywPUZ+V9vb4J5b/MmBU9InaeeI627kC1IPq8XgwoBcBwtOJHrm/RdA1K5Fg\n8XKnNOYjrEy4tny8lGJeS4CQ4zivS8IxsqL65LSQy2SqYnyu6RRs1Q1ISDMyPMwB\naIhFFvOlHGN3IiQBUnCuTKAaN/lVmq+BiV/zCLt1AoGAZsSFTnp22KADqFua4MT9\nb0Edq12osa/xB2PSEjb+fA7JTNgkq/qWFPvKa9yLOOftHEofnrZi7xjC2vA1GbFw\ncqf5tEYqJbA2oxuxCLC/irm3akuaBU50Xp5gGuE9jqNODV9RFlDBWi6DWNEYR1Y7\n80Ez/z44KrUyBOfMMcxH6ZQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gemini-netlify-fn-service-acco@test-api-sandesh.iam.gserviceaccount.com",
+  "client_id": "114108878284280862122",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gemini-netlify-fn-service-acco%40test-api-sandesh.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
