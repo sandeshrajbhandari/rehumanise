@@ -22,7 +22,7 @@ exports.handler = async (event) => {
 
     // Generate a response from the model
     const result = await model.generateContent(userMessage);
-    const responseContent = result.response.candidates[0].text;
+    const responseContent = result.response.text();
     console.log(responseContent);
 
     // Return the response text
