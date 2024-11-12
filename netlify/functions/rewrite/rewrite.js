@@ -9,14 +9,14 @@ const path = require("path");
 // Load service account key from environment variable
 console.log(path.resolve(__dirname + "/rfc2468.pdf"));
 console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-// const serviceAccountKey = JSON.parse(
-//   process.env.GOOGLE_APPLICATION_CREDENTIALS
-// );
+const serviceAccountKey = JSON.parse(
+  process.env.GOOGLE_APPLICATION_CREDENTIALS
+);
 
-// // Create a client using the service account key
-// const client = auth.fromJSON(serviceAccountKey);
-// console.log(client);
-// client.scopes = ["https://www.googleapis.com/auth/cloud-platform"];
+// Create a client using the service account key
+const client = auth.fromJSON(serviceAccountKey);
+console.log(client);
+client.scopes = ["https://www.googleapis.com/auth/cloud-platform"];
 
 const project = process.env.PROJECT_ID || "test-api-sandesh";
 const location = process.env.REGION || "us-central1";
@@ -25,6 +25,7 @@ const textModel = "gemini-1.5-flash-002";
 const vertexAI = new VertexAI({
   project,
   location,
+  client,
 });
 
 console.log("Vertex AI initialized");
