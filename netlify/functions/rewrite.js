@@ -15,6 +15,17 @@ const model = genAI.getGenerativeModel({
 
 // Handler function for Netlify Edge
 exports.handler = async (event) => {
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    systemInstruction: "You are a helpful assistant providing information.",
+  //   generationConfig: {
+  //     candidateCount: 1,
+  //     maxOutputTokens: 256,
+  //     temperature: 0.7,
+  //     stopSequences: ["x"], // Optional stop sequence
+  //   },
+  });
   try {
     // Parse the request content
     const requestBody = JSON.parse(event.body);
@@ -31,6 +42,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ response: responseContent }),
       headers: { "Content-Type": "application/json" },
     };
+    
   } catch (error) {
     console.error("Error generating content:", error);
     return {
