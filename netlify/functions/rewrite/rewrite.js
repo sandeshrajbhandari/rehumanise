@@ -12,7 +12,7 @@ console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 const serviceAccountKey = JSON.parse(
   process.env.GOOGLE_APPLICATION_CREDENTIALS
 );
-
+print(serviceAccountKey);
 // Create a client using the service account key
 const client = auth.fromJSON(serviceAccountKey);
 console.log(client);
