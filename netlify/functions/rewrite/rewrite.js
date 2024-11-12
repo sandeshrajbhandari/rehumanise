@@ -1,70 +1,31 @@
-const {
-  HarmCategory,
-  HarmBlockThreshold,
-  VertexAI,
-} = require("@google-cloud/vertexai");
-const { auth } = require("google-auth-library");
-const path = require("path");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Load service account key from environment variable
-console.log(path.resolve(__dirname + "/rfc2468.pdf"));
-console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-const serviceAccountKey = JSON.parse(
-  process.env.GOOGLE_APPLICATION_CREDENTIALS
-);
-print(serviceAccountKey);
-// Create a client using the service account key
-const client = auth.fromJSON(serviceAccountKey);
-console.log(client);
-client.scopes = ["https://www.googleapis.com/auth/cloud-platform"];
-
-const project = process.env.PROJECT_ID || "test-api-sandesh";
-const location = process.env.REGION || "us-central1";
-const textModel = "gemini-1.5-flash-002";
-
-const vertexAI = new VertexAI({
-  project,
-  location,
-  client,
+// Set API key for authentication
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+  systemInstruction: "You are a helpful assistant providing information.",
+//   generationConfig: {
+//     candidateCount: 1,
+//     maxOutputTokens: 256,
+//     temperature: 0.7,
+//     stopSequences: ["x"], // Optional stop sequence
+//   },
 });
 
-console.log("Vertex AI initialized");
-// console.log(vertexAI);
-
-// Instantiate the Gemini model with safety settings
-const generativeModel = vertexAI.getGenerativeModel({
-  model: textModel,
-  safetySettings: [
-    {
-      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    },
-  ],
-  generationConfig: { maxOutputTokens: 256 },
-  systemInstruction: {
-    role: "system",
-    parts: [{ text: "You are a helpful assistant providing information." }],
-  },
-});
-
-// Handler function to integrate with Netlify
+// Handler function for Netlify Edge
 exports.handler = async (event) => {
   try {
-    // Parse input content from the request body
+    // Parse the request content
     const requestBody = JSON.parse(event.body);
-    const userMessage =
-      requestBody.message || "Hello! How can I assist you today?";
+    const userMessage = requestBody.message || "Hello! How can I assist you today?";
 
-    // Prepare the content generation request
-    const request = {
-      contents: [{ role: "user", parts: [{ text: userMessage }] }],
-    };
+    // Generate a response from the model
+    const result = await model.generateContent(userMessage);
+    const responseContent = result.response.candidates[0].text;
+    console.log(responseContent);
 
-    // Generate content using the Gemini model
-    const result = await generativeModel.generateContent(request);
-    const responseContent = result.response.candidates[0].content.parts[0].text;
-
-    // Return only the text of the model's response
+    // Return the response text
     return {
       statusCode: 200,
       body: JSON.stringify({ response: responseContent }),
@@ -74,10 +35,7 @@ exports.handler = async (event) => {
     console.error("Error generating content:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: "Failed to generate content",
-        details: error.message,
-      }),
+      body: JSON.stringify({ error: "Failed to generate content", details: error.message }),
     };
   }
 };
