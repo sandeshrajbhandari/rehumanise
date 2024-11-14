@@ -15,8 +15,9 @@ const model = genAI.getGenerativeModel({
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:8888",
   "http://sandeshrajbhandari.com.np",
-  "rehumanisepro.netlify.app",
+  "https://rehumanisepro.netlify.app",
 ];
 
 // Secret key for generating the hash

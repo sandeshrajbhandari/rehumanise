@@ -7,9 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import crypto from "crypto";
 
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+
 const REWRITE_API_INIT_KEY = "71461b1ffda00442ecc98e3bf0d972cd";
 
-const JokePage = () => {
+const RewritePage = () => {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,7 +39,8 @@ const JokePage = () => {
 
       // Send the request with the datetime in the body and API key in headers
       const res = await axios.post(
-        "http://localhost:8888/.netlify/functions/rewrite",
+        "/.netlify/functions/rewrite",
+        // "https://rehumanisepro.netlify.app"
         { message, datetime },
         {
           headers: {
@@ -45,8 +49,8 @@ const JokePage = () => {
           },
         }
       );
-      
-      setResponse(res.data.response);
+      let markdownContent = await serialize(res.data.response)
+      setResponse(markdownContent);
     } catch (error) {
       console.error("Error:", error);
       setResponse("Failed to get a response");
@@ -59,7 +63,7 @@ const JokePage = () => {
     <div className="container mx-auto max-w-md mt-10">
       <Card>
         <CardHeader>
-          <CardTitle>Ask for a Joke</CardTitle>
+          <CardTitle>Paste your text here</CardTitle>
         </CardHeader>
         <CardContent>
           <Textarea
@@ -68,13 +72,11 @@ const JokePage = () => {
             onChange={handleInputChange}
             className="mb-4"
           />
-          <Button onClick={handleSubmit} disabled={loading}>
+          <Button onClick={handleSubmit} disabled={loading || !message}>
             {loading ? "Loading..." : "Submit"}
           </Button>
           {response && (
-            <Alert className="mt-4 bg-gray-100">
-              <AlertDescription>{response}</AlertDescription>
-            </Alert>
+            <MDXRemote {...response} />
           )}
         </CardContent>
       </Card>
@@ -82,4 +84,4 @@ const JokePage = () => {
   );
 };
 
-export default JokePage;
+export default RewritePage;
