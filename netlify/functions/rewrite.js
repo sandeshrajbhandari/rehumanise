@@ -1,53 +1,77 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Set API key for authentication
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
   systemInstruction: "You are a helpful assistant providing information.",
-//   generationConfig: {
-//     candidateCount: 1,
-//     maxOutputTokens: 256,
-//     temperature: 0.7,
-//     stopSequences: ["x"], // Optional stop sequence
-//   },
+  generationConfig: {
+    candidateCount: 1,
+    maxOutputTokens: 256,
+    temperature: 0.7,
+    stopSequences: ["x"],
+  },
 });
 
-// Handler function for Netlify Edge
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://sandeshrajbhandari.com.np",
+  "rehumanisepro.netlify.app",
+];
+
 exports.handler = async (event) => {
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: "You are a helpful assistant providing information.",
-  //   generationConfig: {
-  //     candidateCount: 1,
-  //     maxOutputTokens: 256,
-  //     temperature: 0.7,
-  //     stopSequences: ["x"], // Optional stop sequence
-  //   },
-  });
+  const origin = event.headers.origin;
+  const isAllowedOrigin = allowedOrigins.includes(origin);
+  if (origin == undefined || !isAllowedOrigin) {
+    console.log("Send request from allowed domains only.");
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "Send request from allowed domains only." }),
+    };
+  }
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": isAllowedOrigin ? origin : allowedOrigins[1],
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    };
+  }
+
+  // Process POST request
   try {
-    // Parse the request content
-    const requestBody = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body || "{}");
     const userMessage = requestBody.message || "Hello! How can I assist you today?";
 
-    // Generate a response from the model
     const result = await model.generateContent(userMessage);
-    const responseContent = result.response.text();
-    console.log(responseContent);
+    const responseContent = result?.response?.text() || "No response generated.";
 
-    // Return the response text
     return {
       statusCode: 200,
       body: JSON.stringify({ response: responseContent }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": isAllowedOrigin ? origin : allowedOrigins[1],
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
     };
-    
   } catch (error) {
     console.error("Error generating content:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed to generate content", details: error.message }),
+      body: JSON.stringify({
+        error: "Failed to generate content",
+        details: error.message,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": isAllowedOrigin ? origin : allowedOrigins[1],
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
     };
   }
 };

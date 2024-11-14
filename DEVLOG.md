@@ -19,6 +19,10 @@ for testing locally.
 
 - https://stackoverflow.com/questions/69351433/i-am-trying-to-host-my-react-website-on-netlify-but-there-is-a-npm-install-error
 
+```
+curl -X POST -H "Content-Type: application/json" -d '{"message": "Tell me a joke!"}' localhost:8888/.netlify/functions/rewrite
+```
+
 ## progress logs
 
 ### 2024-11-09
