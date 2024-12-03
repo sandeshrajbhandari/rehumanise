@@ -29,3 +29,27 @@ for testing locally.
 - next TODOs are:
   - setup an API for ai detection that returns a percent.
   - setup a humanizer rewrite service that sends text to gemini with clever prompting and returns a rewritten text.
+
+### 2024-12-03
+
+- start setting up nextauth, prisma, supabase and stripe billing for SaaS features.
+- using https://www.youtube.com/watch?v=oNerY9rKHEI&t=588s as reference. check Notion knowledge hub for notes.
+- nextauth file locaiton is different for nextjs 13+. - /app/api/auth/[...nextauth]/route.ts
+- installed prisma for nextauth adapter - ![Nextauth prisma adapter setup guide](https://authjs.dev/getting-started/adapters/prisma)
+- created prisma.js file
+```js
+import { PrismaClient } from "@prisma/client"
+ 
+const globalForPrisma = globalThis
+ 
+const prisma = globalForPrisma.prisma || new PrismaClient()
+ 
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+
+export default prisma
+```
+- created schema.prisma file and ran the migration code. had to create a subpabase postgres server and use the DATABASE_URL in .env file. had some issues, was using the wrong port use 5432 instead of 6--- one.
+
+### 2024-12-04
+- created user/signin/page.jsx for login with google, faced issue with postgres database connection due to '$' in password. used %24 instead in DATABASE_URL. encoding issue it seems.
+- 
