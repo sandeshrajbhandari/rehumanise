@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
-  systemInstruction: "You are a helpful assistant providing information.",
+  systemInstruction: "Rewrite the text in a more concise and engaging way. Avoid using complex words like delve.",
   generationConfig: {
     candidateCount: 1,
     maxOutputTokens: 256,

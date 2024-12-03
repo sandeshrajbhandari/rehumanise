@@ -75,9 +75,11 @@ const RewritePage = () => {
           <Button onClick={handleSubmit} disabled={loading || !message}>
             {loading ? "Loading..." : "Submit"}
           </Button>
-          {response && (
+          <Alert className="mt-4 bg-gray-100">
+              <AlertDescription>{response && (
             <MDXRemote {...response} />
-          )}
+          )}</AlertDescription>
+            </Alert>
         </CardContent>
       </Card>
     </div>
