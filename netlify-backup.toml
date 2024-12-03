@@ -9,3 +9,4 @@
 		environment = { TEST_ENV = "from_netlify_toml" } # add your key here
 
 
+        node_bundler = "esbuild"

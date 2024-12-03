@@ -10,7 +10,7 @@ const path = require("path");
 console.log(path.resolve(__dirname + "/rfc2468.pdf"));
 console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 const serviceAccountKey = JSON.parse(
-  process.env.GOOGLE_APPLICATION_CREDENTIALS
+  process.env.SERVICE_ACCOUNT_KEY
 );
 print(serviceAccountKey);
 // Create a client using the service account key
