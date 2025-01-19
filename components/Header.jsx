@@ -12,7 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/app/lib/utils";
 
 import { usePathname } from "next/navigation";
 
@@ -20,8 +20,8 @@ const Navbar = () => {
   const navigationItems = [
     { title: "Home", href: "/" },
     { title: "About", href: "/about" },
-    { title: "Products", href: "/products" },
-    { title: "Contact", href: "/contact" },
+    { title: "AI Detect", href: "/ai_detect" },
+    { title: "Rewrite", href: "/rewrite" },
   ];
   let pathname = usePathname();
   return (

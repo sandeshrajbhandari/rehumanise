@@ -5,11 +5,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
+import NeedSignIn from "@/components/NeedSignIn";
+
+import { SessionProvider } from "next-auth/react";
+import { useSession } from "next-auth/react";
+
 function DetectAI() {
   const [text, setText] = useState("");
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { data: session, status } = useSession();
+  // console.log(session);
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  // Handle unauthenticated users
+  if (status === "unauthenticated") {
+    // return <p>You are not logged in. Please log in to use this feature.</p>;
+    return <NeedSignIn />;
+  }
+
+  if (session.hasSub) {
+    return <p>You need to subscribe</p>;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +81,7 @@ function DetectAI() {
                 required
               />
             </div>
-            
+
             <Button type="submit" disabled={loading}>
               {loading ? "Checking..." : "Check AI"}
             </Button>
@@ -71,7 +92,7 @@ function DetectAI() {
               <AlertDescription>Error: {error}</AlertDescription>
             </Alert>
           )}
-          
+
           {response && (
             <div className="mt-4">
               <h2 className="text-xl font-semibold mb-2">Results:</h2>
@@ -86,4 +107,14 @@ function DetectAI() {
   );
 }
 
-export default DetectAI;
+// export default DetectAI;
+
+const AIDetectPage = () => {
+  return (
+    <SessionProvider>
+      <DetectAI />
+    </SessionProvider>
+  );
+};
+
+export default AIDetectPage;

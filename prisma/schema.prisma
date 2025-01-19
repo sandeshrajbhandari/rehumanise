@@ -1,6 +1,7 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
 }
  
 generator client {
@@ -15,6 +16,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  stripe_customer_id String?
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

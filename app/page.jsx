@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import NavigationMenuDemo from "@/components/Header2";
 import { Hero } from "@/components/Hero";
 import { Robot3D } from "@/components/Robot3D";
@@ -18,11 +18,12 @@ import {
 export default function Home() {
   return (
     <div className="bg-gradient-to-b from-slate-50 to-slate-100">
-      <Header />
+      {/* <Header /> */}
       <Hero />
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
+      {/* <section className="container mx-auto px-4 py-16"> */}
+      <section className="container py-20 md:py-32 space-y-6 gap-10v max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">
           Why Choose Our Service
         </h2>
@@ -63,7 +64,8 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="container mx-auto px-4 py-16 bg-white border-r-4">
+      {/* <section className="container mx-auto px-4 py-16 bg-white border-r-4"> */}
+      <section className="container px-4 py-16 max-w-7xl mx-auto bg-white border-r-4 rounded-3xl">
         <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="flex items-start gap-4">
