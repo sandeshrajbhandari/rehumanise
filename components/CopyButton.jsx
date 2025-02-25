@@ -17,7 +17,7 @@ export default function CopyButton({ text }) {
 
   return (
     <div className="relative p-4 border rounded-lg bg-gray-100">
-      <p className="text-gray-700">{text}</p>
+      
       <button
         onClick={handleCopy}
         className="absolute top-2 right-2 p-2 bg-gray-200 rounded-lg hover:bg-gray-300 active:bg-gray-400 transition"
