@@ -6,6 +6,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "../../prisma";
 
 import { stripe } from "@app/lib/billing";
+
+
+
 // const prisma = new PrismaClient();
 export const authOptions = {
   // Configure one or more authentication providers
