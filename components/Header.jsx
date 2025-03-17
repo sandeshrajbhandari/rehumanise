@@ -81,7 +81,9 @@ const Navbar = () => {
 
         {/* CTA Button - visible on desktop */}
         <div className="hidden md:block">
-          <Button>Get Started</Button>
+          <Link href="/user/dashboard">
+            <Button>Get Started</Button>
+          </Link>
         </div>
       </div>
     </header>

@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 //price_1NarR3APMZcBliJSoefCKTi5
 
 export const stripe = new Stripe(String(process.env.STRIPE_SECRET), {
-  apiVersion: "2022-11-15",
+  apiVersion: "2023-08-16",
 });
 
 export async function hasSubscription() {
@@ -38,6 +38,10 @@ export async function createCheckoutLink(customer) {
     line_items: [
       {
         price: "price_1JuVIiDrScrwd5y9uWvWqFlx",
+        quantity: 1,
+      },
+      {
+        price: "price_1R3bWODrScrwd5y9qnR1VgZv",
         quantity: 1,
       },
     ],
@@ -80,7 +84,7 @@ export async function generateCustomerPortalLink(customerId) {
   try {
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: process.env.NEXTAUTH_URL + "/stripe/stripeDashboard",
+      return_url: process.env.NEXTAUTH_URL + "/user/dashboard",
     });
 
     console.log();
