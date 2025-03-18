@@ -7,6 +7,8 @@ import { Hero } from "@/components/Hero";
 import { Robot3D } from "@/components/Robot3D";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PricingTable from "@/components/PricingTable";
+import { StripePricingTable } from "@/app/lib/stripePricingTable";
 import {
   Check,
   Sparkles,
@@ -15,6 +17,7 @@ import {
   Zap,
   MoreHorizontal,
 } from "lucide-react";
+import CustomPricingTable from "@/components/ui/custom-pricing-table";
 
 export default function Home() {
   return (
@@ -181,6 +184,17 @@ export default function Home() {
             <MoreHorizontal className="w-4 h-4" />
           </div>
         </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="container mx-auto px-4 py-20">
+        {/* <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Choose Your Plan
+          </h2>
+          <PricingTable />
+        </div> */}
+        <CustomPricingTable />
       </section>
 
       {/* CTA Section */}

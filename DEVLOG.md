@@ -34,7 +34,6 @@ curl -X POST -H "Content-Type: application/json" -d '{"message": "Tell me a joke
   - setup an API for ai detection that returns a percent.
   - setup a humanizer rewrite service that sends text to gemini with clever prompting and returns a rewritten text.
 
-
 ### 2024-11-14
 
 - setup a rewrite service that sends text to gemini with clever prompting and returns a rewritten text.
@@ -42,6 +41,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"message": "Tell me a joke
 - the api key is generated using the current datetime and a secret key.
 - the api key is sent in the header as `X-API-Key` along with the datetime value in the body.
 - attackers can still browse the .js static bundled files, but its one step more secure since the api key is dynamic.
+
 ```
 const generateApiKey = (datetime) => {
     return crypto
@@ -50,7 +50,9 @@ const generateApiKey = (datetime) => {
       .digest("hex");
   };
 ```
+
 - simple curl requests won't work even if they spoof the origin.
+
 ```
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -58,12 +60,13 @@ curl -X POST \
   -d '{"message": "Tell me a joke!"}' \
   localhost:8888/.netlify/functions/rewrite
 ```
-- this curl request will run. 
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -H "Origin: http://localhost:3000" \
-  -H "X-API-Key: 123" \
-  -d '{"message": "Tell me a joke!", "datetime": "2024-11-14T12:00:00Z"}' \
+
+- this curl request will run.
+  curl -X POST \
+   -H "Content-Type: application/json" \
+   -H "Origin: http://localhost:3000" \
+   -H "X-API-Key: 123" \
+   -d '{"message": "Tell me a joke!", "datetime": "2024-11-14T12:00:00Z"}' \
 
 ### 2024-12-03
 
@@ -72,19 +75,31 @@ curl -X POST \
 - nextauth file locaiton is different for nextjs 13+. - /app/api/auth/[...nextauth]/route.ts
 - installed prisma for nextauth adapter - ![Nextauth prisma adapter setup guide](https://authjs.dev/getting-started/adapters/prisma)
 - created prisma.js file
-```js
-import { PrismaClient } from "@prisma/client"
- 
-const globalForPrisma = globalThis
- 
-const prisma = globalForPrisma.prisma || new PrismaClient()
- 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
 
-export default prisma
+```js
+import { PrismaClient } from "@prisma/client";
+
+const globalForPrisma = globalThis;
+
+const prisma = globalForPrisma.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+export default prisma;
 ```
+
 - created schema.prisma file and ran the migration code. had to create a subpabase postgres server and use the DATABASE_URL in .env file. had some issues, was using the wrong port use 5432 instead of 6--- one.
 
 ### 2024-12-04
+
 - created user/signin/page.jsx for login with google, faced issue with postgres database connection due to '$' in password. used %24 instead in DATABASE_URL. encoding issue it seems.
-- 
+
+### 2024-03-17
+
+- Added subscription plan handling to NextAuth session callback to track user's plan level (free/hobby/pro)
+- Added subscription product linking in createCheckoutLink to handle multiple price items
+- Updated customer portal return URL to point to /user/dashboard
+- Added dashboard link to Header CTA button
+- Created new TypeScript route for NextAuth with improved subscription handling
+- Setup basic TypeScript config with paths aliases for @/_ and @app/_
+- added custom-pricing-table

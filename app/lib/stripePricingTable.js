@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 export const StripePricingTable = () => {
   useEffect(() => {
     const script = document.createElement("script");
@@ -13,7 +13,7 @@ export const StripePricingTable = () => {
   }, []);
 
   return React.createElement("stripe-pricing-table", {
-    "pricing-table-id": "<PRICING TABLE ID>",
-    "publishable-key": "<STRIPE PUBLI KEY>",
+    "pricing-table-id": process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID,
+    "publishable-key": process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
   });
 };
