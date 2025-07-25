@@ -103,3 +103,4 @@ export default prisma;
 - Created new TypeScript route for NextAuth with improved subscription handling
 - Setup basic TypeScript config with paths aliases for @/_ and @app/_
 - added custom-pricing-table
+

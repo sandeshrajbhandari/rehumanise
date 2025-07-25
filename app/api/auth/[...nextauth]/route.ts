@@ -62,11 +62,11 @@ const getSubscriptionPlan = (product: Stripe.Product) => {
   console.log(process.env.STRIPE_HOBBY_PRODUCT_ID);
   switch (product.id) {
     case process.env.STRIPE_HOBBY_PRODUCT_ID:
-      return "hobby";
+      return "Hobby";
     case process.env.STRIPE_PRO_PRODUCT_ID:
-      return "pro";
+      return "Pro";
     default:
-      return "free";
+      return "Free";
   }
 };
 

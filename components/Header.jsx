@@ -13,10 +13,12 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/app/lib/utils";
-
+import { UserAvatar } from "@/components/ui/UserAvatar";
+import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const { data: session } = useSession();
   const navigationItems = [
     { title: "Home", href: "/" },
     { title: "About", href: "/about" },
@@ -54,36 +56,50 @@ const Navbar = () => {
           </NavigationMenu>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col space-y-4 mt-4">
-                {navigationItems.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={item.href}
-                    className="text-lg hover:text-primary"
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </div>
+        {/* Right side items */}
+        <div className="flex items-center space-x-4">
+          {session ? (
+            <UserAvatar />
+          ) : (
+            <div className="hidden md:block">
+              <Link href="/user/dashboard">
+                <Button>Get Started</Button>
+              </Link>
+            </div>
+          )}
 
-        {/* CTA Button - visible on desktop */}
-        <div className="hidden md:block">
-          <Link href="/user/dashboard">
-            <Button>Get Started</Button>
-          </Link>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <nav className="flex flex-col space-y-4 mt-4">
+                  {navigationItems.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      className="text-lg hover:text-primary"
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                  {!session && (
+                    <Link
+                      href="/user/dashboard"
+                      className="text-lg hover:text-primary"
+                    >
+                      Get Started
+                    </Link>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

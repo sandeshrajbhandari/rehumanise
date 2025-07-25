@@ -10,18 +10,18 @@ const globalForPrisma = globalThis;
 
 const prisma = globalForPrisma.prisma || new PrismaClient();
 
-async function clearPreparedStatements() {
-  try {
-    await prisma.$executeRawUnsafe("DEALLOCATE ALL");
-    console.log("Cleared prepared statements.");
-  } catch (error) {
-    console.error("Error clearing prepared statements:", error);
-  }
-}
+// async function clearPreparedStatements() {
+//   try {
+//     await prisma.$executeRawUnsafe("DEALLOCATE ALL");
+//     console.log("Cleared prepared statements.");
+//   } catch (error) {
+//     console.error("Error clearing prepared statements:", error);
+//   }
+// }
 
-if (!globalForPrisma.prisma) {
-  clearPreparedStatements();
-}
+// if (!globalForPrisma.prisma) {
+//   clearPreparedStatements();
+// }
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;

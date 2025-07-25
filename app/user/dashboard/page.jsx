@@ -37,7 +37,8 @@ export default async function Page() {
     "" + user?.stripe_customer_id
   );
 
-  const hasSub = await hasSubscription();
+  // const hasSub = await hasSubscription();
+  const hasSub = session.hasSub;
   const checkoutLink = await createCheckoutLink("" + user?.stripe_customer_id);
 
   return (
