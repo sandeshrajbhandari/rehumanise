@@ -5,23 +5,53 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import CopyButton from "@/components/CopyButton";
 import crypto from "crypto";
 
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 
+import NeedSignIn from "@/components/NeedSignIn";
+
+import { SessionProvider } from "next-auth/react";
+import { useSession } from "next-auth/react";
+//import { error } from "console";
+
 const REWRITE_API_INIT_KEY = "71461b1ffda00442ecc98e3bf0d972cd";
 
-const RewritePage = () => {
+function REwritePage() {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  // Add this state to store the plain text version of the response for copying
+  const [plainTextResponse, setPlainTextResponse] = useState("");
+
+/*
+ const { data: session, status } = useSession();
+  // console.log(session);
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  // Handle unauthenticated users
+  if (status === "unauthenticated") {
+    // return <p>You are not logged in. Please log in to use this feature.</p>;
+    return <NeedSignIn />;
+  }
+
+  if (session.hasSub) {
+    return <p>You need to subscribe</p>;
+  }
+*/
+const extractTextFromMDX = (compiledSource) => {
+  const match = compiledSource.match(/children: "(.*?)"/);
+  return match ? match[1] : "No text found";
+};
 
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
 
-  // Function to create the hash
   const generateApiKey = (datetime) => {
     return crypto
       .createHash("sha256")
@@ -33,14 +63,11 @@ const RewritePage = () => {
     setLoading(true);
 
     try {
-      // Generate datetime and API key hash
       const datetime = new Date().toISOString();
       const apiKey = generateApiKey(datetime);
 
-      // Send the request with the datetime in the body and API key in headers
-      const res = await axios.post(
+      /*const res = await axios.post(
         "/.netlify/functions/rewrite",
-        // "https://rehumanisepro.netlify.app"
         { message, datetime },
         {
           headers: {
@@ -48,43 +75,87 @@ const RewritePage = () => {
             "Content-Type": "application/json",
           },
         }
-      );
-      let markdownContent = await serialize(res.data.response)
+      );*/
+      
+      // Store the plain text for copying
+      setPlainTextResponse(message);
+      
+      // Serialize the markdown content
+      let markdownContent = await serialize(message);
       setResponse(markdownContent);
     } catch (error) {
       console.error("Error:", error);
       setResponse("Failed to get a response");
+      setPlainTextResponse("Failed to get a response");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto max-w-md mt-10">
-      <Card>
-        <CardHeader>
-          <CardTitle>Paste your text here</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Textarea
-            placeholder="Type your message here..."
-            value={message}
-            onChange={handleInputChange}
-            className="mb-4"
-          />
-          <Button onClick={handleSubmit} disabled={loading || !message}>
-            {loading ? "Loading..." : "Submit"}
-          </Button>
-          {response && (
-            <Alert className="mt-4 bg-gray-100">
-              <AlertDescription>
-                <MDXRemote {...response} />
-              </AlertDescription>
-            </Alert>
-          )}
-        </CardContent>
-      </Card>
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2"> {/* Removed gap-8 */}
+        {/* Input Section - Left Side */}
+        <div className="relative">
+          <Card className="h-full shadow-md rounded-lg overflow-hidden">
+            <CardHeader className="p-6">
+              <CardTitle className="text-lg font-semibold text-gray-800">Input Text</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <Textarea
+                placeholder="Type your message here..."
+                value={message}
+                onChange={handleInputChange}
+                className="mb-4 min-h-[300px] border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-md"
+              />
+              <Button
+                onClick={handleSubmit}
+                disabled={loading || !message}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md py-2 transition-colors duration-300"
+              >
+                {loading ? "Loading..." : "Submit"}
+              </Button>
+            </CardContent>
+          </Card>
+          {/* Vertical Line Separator */}
+          <div className="hidden md:block absolute top-0 right-0 h-full w-[1px] bg-gray-300 transform translate-x-1/2"></div>
+        </div>
+
+        <Card className="h-full shadow-md rounded-lg overflow-hidden">
+          <CardHeader className="p-6 flex justify-between items-center">
+            <CardTitle className="text-lg font-semibold text-gray-800">Output</CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            {response ? (
+              <div>
+                <Alert className="bg-gray-50 min-h-[300px] border border-gray-200 rounded-md mb-4">
+                  <AlertDescription>
+                    <div className="prose prose-sm max-w-none">
+                      <MDXRemote {...response} />
+                    </div>
+                  </AlertDescription>
+                </Alert>
+                {/* Add CopyButton component below the content */}
+                <div className="mt-4">
+                 <CopyButton text={extractTextFromMDX(response.compiledSource)} />
+
+                </div>
+              </div>
+            ) : (
+              <div className="min-h-[300px] flex items-center justify-center text-gray-500 italic">
+                Your rewritten text will appear here
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
+  );
+}
+
+const RewritePage = () => {
+  return (
+    <REwritePage/>
   );
 };
 
