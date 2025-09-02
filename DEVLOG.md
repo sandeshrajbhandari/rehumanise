@@ -94,7 +94,7 @@ export default prisma;
 
 - created user/signin/page.jsx for login with google, faced issue with postgres database connection due to '$' in password. used %24 instead in DATABASE_URL. encoding issue it seems.
 
-### 2024-03-17
+### 2025-03-17
 
 - Added subscription plan handling to NextAuth session callback to track user's plan level (free/hobby/pro)
 - Added subscription product linking in createCheckoutLink to handle multiple price items
@@ -103,4 +103,11 @@ export default prisma;
 - Created new TypeScript route for NextAuth with improved subscription handling
 - Setup basic TypeScript config with paths aliases for @/_ and @app/_
 - added custom-pricing-table
+
+### 2025-09-02
+
+- Restructured user dashboard and authentication flow
+  - layout.js added for /user so that rewrite and other pages can use the sidebar and header.
+- Moved rewrite functionality to /user/rewrite/ with improved UI
+- Added AI detector page at /user/ai-detector/
 

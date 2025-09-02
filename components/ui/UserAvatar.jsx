@@ -14,13 +14,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { LogOut, Settings, CreditCard } from "lucide-react";
 
-export function UserAvatar() {
-  const { data: session } = useSession();
+export function UserAvatar({ session }) {
+  // const { data: session } = useSession();
+  console.log("UserAvatar - session:", session);
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!session) return null;
-
+  console.log(session);
+  console.log(JSON.stringify(session.user))
   const userInitials = session.user?.name
     ? session.user.name
         .split(" ")
@@ -29,12 +31,15 @@ export function UserAvatar() {
         .toUpperCase()
     : "U";
 
+  const userImage = session.user?.image || "";
+  console.log(userImage)
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center space-x-2 focus:outline-none focus-visible:ring-0">
           <Avatar className=" cursor-pointer border-2 border-primary">
-            <AvatarImage src={session.user?.image || ""} alt={session.user?.name || "User"} />
+            
+            <AvatarImage src={userImage} alt={session?.user?.name || "User"} />
             <AvatarFallback className="bg-primary/10 text-primary">{userInitials}</AvatarFallback>
           </Avatar>
         </button>

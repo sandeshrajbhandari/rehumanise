@@ -60,7 +60,7 @@ const RewritePage = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-md mt-10">
+    <div className="flex-1 overflow-y-auto p-8 bg-gray-50">
       <Card>
         <CardHeader>
           <CardTitle>Paste your text here</CardTitle>

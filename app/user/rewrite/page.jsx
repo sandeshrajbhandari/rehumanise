@@ -94,7 +94,8 @@ const extractTextFromMDX = (compiledSource) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2"> {/* Removed gap-8 */}
+      <h1 className="text-2xl font-bold mb-4">Rewrite</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {/* Removed gap-8 */}
         {/* Input Section - Left Side */}
         <div className="relative">
           <Card className="h-full shadow-md rounded-lg overflow-hidden">
@@ -118,7 +119,7 @@ const extractTextFromMDX = (compiledSource) => {
             </CardContent>
           </Card>
           {/* Vertical Line Separator */}
-          <div className="hidden md:block absolute top-0 right-0 h-full w-[1px] bg-gray-300 transform translate-x-1/2"></div>
+          {/* <div className="hidden md:block absolute top-0 right-0 h-full w-[1px] bg-gray-300 transform translate-x-1/2"></div> */}
         </div>
 
         <Card className="h-full shadow-md rounded-lg overflow-hidden">

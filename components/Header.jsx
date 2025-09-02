@@ -18,7 +18,8 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log("loaded nav session", session?.user.image)
   const navigationItems = [
     { title: "Home", href: "/" },
     { title: "About", href: "/about" },
@@ -58,8 +59,11 @@ const Navbar = () => {
 
         {/* Right side items */}
         <div className="flex items-center space-x-4">
-          {session ? (
-            <UserAvatar />
+        {status === 'loading' ? (
+            // Loading skeleton with same dimensions as UserAvatar
+            pathname.startsWith('/user') ? <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" /> : ""
+          ) : session ? (
+            <UserAvatar session={session}/>
           ) : (
             <div className="hidden md:block">
               <Link href="/user/dashboard">
