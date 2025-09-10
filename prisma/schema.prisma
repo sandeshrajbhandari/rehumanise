@@ -17,6 +17,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
   stripe_customer_id String?
+  // Subscription fields synced via Stripe webhooks
+  subscription_status           String?
+  subscription_product_id       String?
+  subscription_price_id         String?
+  subscription_current_period_end DateTime?
+  plan                          String          @default("free")
+  hasSub                        Boolean         @default(false)
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

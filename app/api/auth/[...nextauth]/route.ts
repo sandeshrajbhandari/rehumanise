@@ -6,8 +6,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "../../prisma";
 import Stripe from "stripe";
 
-import { stripe } from "@app/lib/billing";
-
 // const prisma = new PrismaClient();
 export const authOptions = {
   // Configure one or more authentication providers
@@ -25,25 +23,10 @@ export const authOptions = {
         const dbUser = await prisma.user.findFirst({
           where: { email: session.user.email },
         });
-        let plan = "free";
-        const subscriptions = await stripe.subscriptions.list({
-          customer: String(dbUser?.stripe_customer_id),
-          expand: ["data.items.data.price"],
-        });
-
-        console.log("getting stripe and db user data", dbUser, subscriptions);
-        if (subscriptions.data.length > 0) {
-          const subscription = subscriptions.data[0];
-          const priceId = subscription.items.data[0].price.id;
-          const price = await stripe.prices.retrieve(priceId, {
-            expand: ["product"],
-          });
-          plan = getSubscriptionPlan(price.product as Stripe.Product);
-        }
-        console.log(plan);
+        const plan = dbUser?.plan || "free";
         return {
           ...session,
-          hasSub: subscriptions.data.length > 0,
+          hasSub: Boolean(dbUser?.hasSub),
           plan,
           stripe_customer_id: dbUser?.stripe_customer_id, // Optional: if you need this elsewhere
         };
@@ -59,8 +42,6 @@ export const authOptions = {
 };
 
 const getSubscriptionPlan = (product: Stripe.Product) => {
-  console.log(typeof product.id);
-  console.log(process.env.STRIPE_HOBBY_PRODUCT_ID);
   switch (product.id) {
     case process.env.STRIPE_HOBBY_PRODUCT_ID:
       return "Hobby";

@@ -19,12 +19,7 @@ export async function hasSubscription() {
     const user = await prisma.user.findFirst({
       where: { email: session.user?.email },
     });
-
-    const subscriptions = await stripe.subscriptions.list({
-      customer: String(user?.stripe_customer_id),
-    });
-
-    return subscriptions.data.length > 0;
+    return Boolean(user?.hasSub);
   }
 
   return false;

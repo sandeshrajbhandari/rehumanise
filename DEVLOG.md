@@ -110,4 +110,22 @@ export default prisma;
   - layout.js added for /user so that rewrite and other pages can use the sidebar and header.
 - Moved rewrite functionality to /user/rewrite/ with improved UI
 - Added AI detector page at /user/ai-detector/
+- fixed header layout shift, and avatar image not appearing.
 
+### 2025-09-10
+- stripe webhook integration
+- installed stripe-cli for mock stripe webhook events (brew install stripe/stripe-cli/stripe)
+- https://docs.stripe.com/webhooks?snapshot-or-thin=snapshot
+  - stripe login
+  - stripe listen --events payment_intent.created,customer.created,payment_intent.succeeded,checkout.session.completed,payment_intent.payment_failed \
+  --forward-to localhost:3000
+- see the [cursor_implement_stripe_webhook_for_sub.md](./cursor_implement_stripe_webhook_for_sub.md) file to see the whole guide to set the testing up
+  - it creates a fake customer ID with a test email, and then locally triggers different events to see how the webhook handles it in our app.
+- this was generated using cursor so there were many errors in the cli commands.
+- i've added fixed commands after some trial and errors
+- i've tested using already created customerid with my email, instead of fake email, cause then i'd have to manually create db entries for that one.
+- currently, subscription creation and updates works
+- it also added additional values like price id product id and subscription end dates etc. i've not reviewed the logic, but it seems to be working.
+- gonna push the changes and review later down the line with final code.
+
+- Also noticed a bug when trying to sign in again, since user/ routes were all protected by default, user/signin wasn't being rendered, so i relocated to page to /signin route.
